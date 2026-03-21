@@ -1,4 +1,4 @@
-
+CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 
 CREATE TABLE public.activity_logs (
   id uuid NOT NULL DEFAULT gen_random_uuid(),
