@@ -8,6 +8,20 @@ if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
   console.error('Supabase environment variables are missing.');
 }
 
-export const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+// ─── In-memory storage — no localStorage, no sessionStorage ──────────────────
+const memoryStore: Record<string, string> = {};
 
+const memoryStorageAdapter = {
+  getItem: (key: string): string | null => memoryStore[key] ?? null,
+  setItem: (key: string, value: string): void => { memoryStore[key] = value; },
+  removeItem: (key: string): void => { delete memoryStore[key]; },
+};
 
+export const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+  auth: {
+    storage: memoryStorageAdapter,
+    persistSession: true,      // survives re-renders, gone on tab close/refresh
+    autoRefreshToken: true,
+    detectSessionInUrl: true,
+  },
+});
