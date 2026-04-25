@@ -67,3 +67,96 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #374151;
 }
+
+/* Hide browser's native password visibility toggle - Comprehensive Solution */
+
+/* Step 1: Remove all webkit appearance */
+input[type="password"] {
+  -webkit-appearance: textfield !important;
+  appearance: textfield !important;
+  -webkit-user-select: text !important;
+  user-select: text !important;
+  font-size: 1rem !important;
+  line-height: 1.5 !important;
+  min-height: 2.5rem !important;
+  overflow: hidden !important;
+}
+
+/* Step 2: Hide all pseudo-elements and buttons */
+input[type="password"]::before,
+input[type="password"]::after {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+input[type="password"]::-webkit-password-toggle,
+input[type="password"]::-webkit-outer-spin-button,
+input[type="password"]::-webkit-inner-spin-button,
+input[type="password"]::-webkit-clear-button,
+input[type="password"]::-webkit-reveal,
+input[type="password"]::-webkit-calendar-picker-indicator,
+input[type="password"]::-moz-reveal {
+  display: none !important;
+  visibility: hidden !important;
+  width: 0 !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+  background: none !important;
+  box-shadow: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  clip: rect(0, 0, 0, 0) !important;
+  clip-path: inset(100%) !important;
+}
+
+/* Step 3: Force background to inherit and remove any images */
+input[type="password"] {
+  background-image: none !important;
+  background-repeat: no-repeat !important;
+  background-attachment: scroll !important;
+  background-position: right center !important;
+  background-size: auto !important;
+  background-clip: padding-box !important;
+  -webkit-background-clip: padding-box !important;
+  background-color: inherit !important;
+  -webkit-font-smoothing: antialiased !important;
+  -webkit-text-security: disc !important;
+  text-security: disc !important;
+}
+
+/* Step 4: Handle focus state */
+input[type="password"]:focus,
+input[type="password"]:focus-visible {
+  -webkit-appearance: textfield !important;
+  appearance: textfield !important;
+}
+
+/* Step 5: Handle autofill to prevent any icon visibility */
+input[type="password"]:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 30px var(--color-surface) inset !important;
+  -webkit-text-fill-color: var(--color-text-primary) !important;
+  box-shadow: 0 0 0 30px var(--color-surface) inset !important;
+  -webkit-appearance: none !important;
+}
+
+input[type="password"]:-webkit-autofill:hover {
+  -webkit-box-shadow: 0 0 0 30px var(--color-surface) inset !important;
+  -webkit-text-fill-color: var(--color-text-primary) !important;
+}
+
+input[type="password"]:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 30px var(--color-surface) inset !important;
+  -webkit-text-fill-color: var(--color-text-primary) !important;
+}
+
+/* Step 6: Disable any datalist styling */
+input[type="password"]::list-item {
+  display: none !important;
+}
+
+/* Step 7: Remove button styling completely */
+input[type="password"]::-webkit-input-speech-button {
+  display: none !important;
+}

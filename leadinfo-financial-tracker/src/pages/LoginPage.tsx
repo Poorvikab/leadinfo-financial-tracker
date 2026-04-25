@@ -7,11 +7,12 @@ import { motion } from 'motion/react';
 import { Checkbox } from '@/components/ui/checkbox'; // Need to create this
 import { Label } from '@/components/ui/label'; // Need to create this
 import { Link, useNavigate } from 'react-router-dom'; // Need to install react-router-dom
-import { Lock, Mail } from 'lucide-react';
+import { Lock, Mail, Eye, EyeOff } from 'lucide-react';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const { loginWithSupabase } = useAuth();
   const navigate = useNavigate();
   const [error, setError] = useState<string | null>(null);
@@ -76,17 +77,24 @@ export default function LoginPage() {
               </div>
               <div className="space-y-2">
                 <Label htmlFor="password">Password</Label>
-                <div className="relative">
+                <div className="relative group">
                   <Lock className="absolute left-3 top-3 h-4 w-4 text-[var(--color-text-secondary)]" />
                   <Input
                     id="password"
-                    type="password"
+                    type={showPassword ? 'text' : 'password'}
                     placeholder="••••••••"
-                    className="pl-10"
+                    className="pl-10 pr-10"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
                   />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3 top-3 text-white opacity-0 group-focus-within:opacity-100 transition-opacity"
+                  >
+                    {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                  </button>
                 </div>
               </div>
               {error && (
