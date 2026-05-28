@@ -47,8 +47,8 @@ export default function SignUpPage() {
       return;
     }
 
-    // After successful signup, send user to login to sign in with their new account
-    navigate('/login', { replace: true });
+    // After successful signup, send user to dashboard (already authenticated)
+    navigate('/dashboard', { replace: true });
   };
 
   return (

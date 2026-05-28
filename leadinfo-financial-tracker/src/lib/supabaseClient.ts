@@ -29,15 +29,17 @@ export async function validateSessionOnLoad(): Promise<void> {
 }
 
 /**
- * Re-validates every 3 minutes while the tab is open.
+ * Re-validates every 30 seconds while the tab is open for extra safety.
+ * The AuthContext also polls every 10 seconds for immediate detection.
  * Returns a cleanup function — call it to stop the watchdog.
  */
 export function startSessionWatchdog(): () => void {
-  const INTERVAL_MS = 3 * 60 * 1000;
+  const INTERVAL_MS = 30 * 1000; // Extra safety check every 30 seconds
 
   const id = setInterval(async () => {
     const { data, error } = await supabase.auth.getUser();
     if (error || !data.user) {
+      // User deleted or session invalid - sign out and redirect
       await supabase.auth.signOut();
       window.location.href = '/login';
     }
